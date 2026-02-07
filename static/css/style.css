@@ -64,7 +64,8 @@ body::before {
     border: 3px solid rgba(255, 255, 255, 0.7);
     box-shadow: 0 15px 45px rgba(183, 110, 121, 0.2);
     position: relative;
-    z-index: 10;
+    z-index: 100;
+    /* Increased to be above canvas but below overlays */
     text-align: center;
 }
 
@@ -249,7 +250,10 @@ body::before {
     bottom: -320px;
     right: 20px;
     width: 300px;
-    z-index: 200;
+    z-index: 50;
+    /* Below UI containers */
+    pointer-events: none;
+    /* Prevent interference */
     transition: bottom 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
@@ -317,15 +321,21 @@ body::before {
 
     .option-btn {
         padding: 15px 20px;
-        font-size: 1em;
+        font-size: 1.1em;
+        /* Slightly larger for readability */
         min-height: 55px;
-        /* Greater than 48px */
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 
     .action-btn {
         padding: 15px 35px;
-        font-size: 1.1em;
-        min-height: 55px;
+        font-size: 1.25em;
+        /* Larger for mobile */
+        min-height: 60px;
+        width: 100%;
+        /* Full width for easier tapping */
     }
 
     #congratsMessage {
