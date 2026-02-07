@@ -1,0 +1,289 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Great+Vibes&family=Outfit:wght@300;400;600;700;800&family=Anton&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Outfit', sans-serif;
+    background: radial-gradient(circle at center, #fff0f3 0%, #ffb6c1 100%);
+    /* Light Pink Theme */
+    color: #4a0000;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    position: relative;
+}
+
+/* Floating Hearts Background Overlay */
+body::before {
+    content: '❤️';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    font-size: 24px;
+    color: rgba(220, 20, 60, 0.1);
+    z-index: -1;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    padding: 20px;
+    animation: floatingHearts 10s linear infinite;
+}
+
+@keyframes floatingHearts {
+    0% {
+        transform: translateY(0) rotate(0deg);
+    }
+
+    50% {
+        transform: translateY(-20px) rotate(10deg);
+    }
+
+    100% {
+        transform: translateY(0) rotate(0deg);
+    }
+}
+
+.mansion-container {
+    max-width: 850px;
+    width: 90%;
+    padding: 60px;
+    background: rgba(255, 255, 255, 0.5);
+    /* Semi-transparent glass */
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+    border-radius: 40px;
+    border: 3px solid rgba(255, 255, 255, 0.7);
+    box-shadow: 0 15px 45px rgba(183, 110, 121, 0.2);
+    position: relative;
+    z-index: 10;
+    text-align: center;
+}
+
+.mansion-header {
+    font-family: 'Playfair Display', serif;
+    font-size: 3.5em;
+    color: #dc143c;
+    /* Crimson */
+    margin-bottom: 25px;
+    letter-spacing: 1px;
+    font-weight: 700;
+}
+
+.mansion-welcome {
+    font-size: 1.25em;
+    color: #4a0000;
+    margin-bottom: 40px;
+    line-height: 1.6;
+    font-weight: 400;
+}
+
+.level-indicator {
+    font-size: 0.9em;
+    color: #dc143c;
+    text-transform: uppercase;
+    letter-spacing: 5px;
+    font-weight: 800;
+    margin-bottom: 30px;
+}
+
+.question-text {
+    font-size: 2.3em;
+    color: #4a0000;
+    margin-bottom: 45px;
+    line-height: 1.3;
+    font-weight: 800;
+}
+
+.guinea-pig-image {
+    display: flex;
+    justify-content: center;
+    margin: 30px 0;
+}
+
+.guinea-pig-image img {
+    max-width: 320px;
+    width: 100%;
+    border-radius: 50%;
+    border: 8px solid #dc143c;
+    box-shadow: 0 0 35px rgba(220, 20, 60, 0.3);
+}
+
+.options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 25px;
+    margin-top: 40px;
+}
+
+.option-btn {
+    padding: 22px 30px;
+    font-size: 1.1em;
+    background: rgba(255, 255, 255, 0.8);
+    color: #4a0000;
+    border: 2px solid rgba(220, 20, 60, 0.2);
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    font-weight: 600;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+.option-btn:hover {
+    background: #dc143c;
+    color: #fff;
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(220, 20, 60, 0.4);
+    border-color: #dc143c;
+}
+
+.final-level .option-btn {
+    border-width: 2px;
+}
+
+.final-level .option-btn:hover {
+    background: #ffd700;
+    color: #000;
+    box-shadow: 0 0 30px rgba(255, 215, 0, 0.8);
+    border-color: #ffd700;
+}
+
+.option-label {
+    font-weight: 800;
+    margin-right: 15px;
+    color: #dc143c;
+}
+
+.option-btn:hover .option-label {
+    color: #fff;
+}
+
+.action-btn {
+    padding: 20px 50px;
+    font-size: 1.3em;
+    background: #dc143c;
+    color: #fff;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 700;
+    letter-spacing: 1px;
+    box-shadow: 0 10px 25px rgba(220, 20, 60, 0.3);
+}
+
+.action-btn:hover {
+    transform: scale(1.1);
+    background: #b76e79;
+}
+
+#congratsMessage {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Great Vibes', cursive;
+    font-size: 5.5em;
+    color: #dc143c;
+    text-align: center;
+    width: 95%;
+    z-index: 100;
+    display: none;
+    text-shadow: 2px 2px 5px rgba(255, 255, 255, 0.5);
+    animation: fadeInScale 1s ease-out forwards;
+}
+
+@keyframes fadeInScale {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.8);
+    }
+
+    to {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+}
+
+#celebrationCanvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 5;
+    pointer-events: none;
+    display: none;
+}
+
+.hidden {
+    display: none;
+}
+
+.fade-in {
+    animation: elegantFadeIn 1s ease-out forwards;
+}
+
+@keyframes elegantFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(30px) scale(0.95);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+#staticMohan {
+    position: fixed;
+    bottom: -320px;
+    right: 20px;
+    width: 300px;
+    z-index: 200;
+    transition: bottom 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+#staticMohan.show {
+    bottom: 0;
+}
+
+.speech-bubble {
+    position: absolute;
+    top: -100px;
+    right: 40px;
+    background: #dc143c;
+    color: #fff;
+    padding: 18px 35px;
+    border-radius: 30px;
+    font-family: 'Anton', sans-serif;
+    font-size: 2em;
+    white-space: nowrap;
+    opacity: 0;
+    transform: scale(0.5);
+    transition: all 0.5s ease;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+#staticMohan.show .speech-bubble {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.speech-bubble:after {
+    content: '';
+    position: absolute;
+    bottom: -15px;
+    right: 60px;
+    border-width: 15px 15px 0;
+    border-style: solid;
+    border-color: #dc143c transparent;
+}

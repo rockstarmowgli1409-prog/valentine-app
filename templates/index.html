@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pondyboy Mansion Exclusive 🎩</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
+</head>
+
+<body>
+    <canvas id="celebrationCanvas"></canvas>
+
+    <div id="congratsMessage">Congratulations!<br>You shall hear back from Mohan soon.</div>
+
+    <!-- Audio Elements -->
+    <audio id="millionaireTheme" loop>
+        <source src="/static/sounds/millionaire.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="selectionSound">
+        <source src="/static/sounds/correct.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="celebrationTheme">
+        <source src="/static/sounds/celebration.mp3" type="audio/mpeg">
+        <!-- Fallback to a common source if needed, though direct mp3 links are tricky.
+             Using a placeholder or best guess for Mersalaayitten. -->
+    </audio>
+
+    <!-- Mansion Landing Gate -->
+    <div class="mansion-container fade-in" id="landingPage">
+        <h1 class="mansion-header">Welcome to the Pondyboy Mansion</h1>
+        <p class="mansion-welcome">To maintain the exclusivity of the mansion, please complete this brief compatibility
+            survey.</p>
+        <button class="action-btn" onclick="startSurvey()">Enter Mansion</button>
+    </div>
+
+    <!-- Survey Quiz Container -->
+    <div class="mansion-container hidden" id="quizContainer">
+        <div class="level-indicator" id="levelIndicator">Mansion Verification Task 1</div>
+
+        <div class="question-container" id="questionContainer">
+            <div class="question-text" id="questionText"></div>
+            <div class="guinea-pig-image hidden" id="guineaPigImage">
+                <img src="/static/images/gp.png" alt="Guinea Pig">
+            </div>
+            <div class="options" id="optionsContainer"></div>
+        </div>
+    </div>
+
+    <div id="staticMohan">
+        <div class="speech-bubble">YAY! WE THE BEST!</div>
+        <img src="/static/images/mohan.png" alt="Mohan" style="width: 100%;">
+    </div>
+
+    <script>
+        const millionaireAudio = document.getElementById('millionaireTheme');
+        const selectionAudio = document.getElementById('selectionSound');
+        const celebrationAudio = document.getElementById('celebrationTheme');
+
+        const questions = [
+            {
+                level: 1,
+                question: "What did Mohan do last summer?",
+                options: [
+                    { label: "A", text: "Ride with Hells Angels" },
+                    { label: "B", text: "Summit a mountain at 6500m" },
+                    { label: "C", text: "Pee myself on the descent" },
+                    { label: "D", text: "All of the above" }
+                ],
+                correct: "D"
+            },
+            {
+                level: 2,
+                question: "Why do you like Mohan?",
+                options: [
+                    { label: "A", text: "Biggest rizzler" },
+                    { label: "B", text: "Funniest man" },
+                    { label: "C", text: "Voluminous big gyatt" },
+                    { label: "D", text: "All of the above" }
+                ],
+                correct: "D"
+            },
+            {
+                level: 3,
+                question: "Which is the cutest breed?",
+                options: [
+                    { label: "A", text: "Golden Retriever" },
+                    { label: "B", text: "Schnauzer" },
+                    { label: "C", text: "Bulldog" },
+                    { label: "D", text: "All them" }
+                ],
+                correct: "D"
+            },
+            {
+                level: 4,
+                question: "Why did Mohan build this entire website?",
+                options: [
+                    { label: "A", text: "He's avoiding real work" },
+                    { label: "B", text: "He ran out of normal date ideas" },
+                    { label: "C", text: "He wanted to flex his coding skills" },
+                    { label: "D", text: "He's down catastrophically bad" }
+                ],
+                correct: "D"
+            },
+            {
+                level: 5,
+                question: "As DJ Khaled says, who is the best?",
+                options: [
+                    { label: "A", text: "WE THE BEST MUSIC" },
+                    { label: "B", text: "WE THE GREATEST MUSIC" },
+                    { label: "C", text: "WE THE CHAMPION MUSIC" },
+                    { label: "D", text: "WE THE LEGEND MUSIC" }
+                ],
+                correct: "A"
+            },
+            {
+                level: 6,
+                question: "What's the #1 reason Mohan is technically a professional athlete?",
+                options: [
+                    { label: "A", text: "Heavy snack lifting record holder" },
+                    { label: "B", text: "Professional-grade horizontal living" },
+                    { label: "C", text: "100m sprint champion (to the fridge)" },
+                    { label: "D", text: "All of the above" }
+                ],
+                correct: "D"
+            },
+            {
+                level: 7,
+                question: "Will you be my Valentine? 💕",
+                options: [
+                    { label: "A", text: "Yes! 💝" },
+                    { label: "B", text: "Absolutely!" },
+                    { label: "C", text: "Of course!" },
+                    { label: "D", text: "100% Yes!" }
+                ],
+                showGuineaPig: true,
+                isMillionaire: true
+            }
+        ];
+
+        let currentLevel = 0;
+
+        function startSurvey() {
+            document.getElementById('landingPage').classList.add('hidden');
+            document.getElementById('quizContainer').classList.remove('hidden');
+
+            // Start Millionaire Theme
+            millionaireAudio.volume = 0.4;
+            millionaireAudio.play().catch(e => console.log("Audio play failed:", e));
+
+            displayQuestion();
+        }
+
+        function displayQuestion() {
+            const question = questions[currentLevel];
+            const quizContainer = document.getElementById('quizContainer');
+
+            if (question.isMillionaire) {
+                quizContainer.classList.add('final-level');
+            } else {
+                quizContainer.classList.remove('final-level');
+            }
+
+            document.getElementById('levelIndicator').textContent = `Mansion Verification Task ${question.level}`;
+            document.getElementById('questionText').textContent = question.question;
+
+            const gpImage = document.getElementById('guineaPigImage');
+            if (question.showGuineaPig) {
+                gpImage.classList.remove('hidden');
+            } else {
+                gpImage.classList.add('hidden');
+            }
+
+            const optionsContainer = document.getElementById('optionsContainer');
+            optionsContainer.innerHTML = '';
+
+            question.options.forEach(option => {
+                const btn = document.createElement('button');
+                btn.className = 'option-btn';
+                btn.innerHTML = `<span class="option-label">${option.label}:</span>${option.text}`;
+                btn.onclick = () => {
+                    selectionAudio.currentTime = 0;
+                    selectionAudio.play();
+                    handleAnswer(option.label);
+                };
+                optionsContainer.appendChild(btn);
+            });
+
+            quizContainer.classList.remove('fade-in');
+            void quizContainer.offsetWidth;
+            quizContainer.classList.add('fade-in');
+        }
+
+        function handleAnswer(selectedOption) {
+            if (currentLevel === questions.length - 1) {
+                startCelebration();
+            } else {
+                currentLevel++;
+                setTimeout(() => {
+                    displayQuestion();
+                }, 400);
+            }
+        }
+
+        function startCelebration() {
+            document.getElementById('quizContainer').style.display = 'none';
+            document.getElementById('congratsMessage').style.display = 'block';
+
+            // Switch Audio
+            millionaireAudio.pause();
+            celebrationAudio.volume = 0.6;
+            celebrationAudio.play().catch(e => console.log("Celebration audio play failed:", e));
+
+            const canvas = document.getElementById('celebrationCanvas');
+            canvas.style.display = 'block';
+
+            const Engine = Matter.Engine,
+                Render = Matter.Render,
+                World = Matter.World,
+                Bodies = Matter.Bodies,
+                Body = Matter.Body;
+
+            const engine = Engine.create();
+            engine.world.gravity.y = -0.15; // Floating up
+
+            const render = Render.create({
+                canvas: canvas,
+                engine: engine,
+                options: {
+                    width: window.innerWidth,
+                    height: window.innerHeight,
+                    wireframes: false,
+                    background: 'transparent'
+                }
+            });
+
+            Render.run(render);
+            const runner = Matter.Runner.create();
+            Matter.Runner.run(runner, engine);
+
+            const mTexture = '/static/images/mohan.png';
+            const spriteImages = [
+                '/static/images/baloo.png',
+                '/static/images/baloo.png',
+                '/static/images/baloo.png',
+                '/static/images/zoe.png',
+                '/static/images/zoe.png',
+                '/static/images/zoe.png'
+            ]; // Way more dogs! Almost 100% Baloo and Zoe.
+
+            const rareSprites = [
+                '/static/images/rose.png',
+                '/static/images/flower.png'
+            ];
+
+            function spawnSprite(texture, isMohan = false) {
+                const size = isMohan ? (130 + Math.random() * 50) : (90 + Math.random() * 70);
+                const x = Math.random() * window.innerWidth;
+                const y = isMohan ? (Math.random() * window.innerHeight) : (window.innerHeight + 100);
+
+                const sprite = Bodies.circle(x, y, size / 2, {
+                    render: {
+                        sprite: {
+                            texture: texture,
+                            xScale: size / (texture.includes('mohan') ? 300 : 150),
+                            yScale: size / (texture.includes('mohan') ? 300 : 150)
+                        }
+                    },
+                    frictionAir: 0.02,
+                    restitution: 1.1,
+                    density: 0.0005
+                });
+
+                Body.setVelocity(sprite, {
+                    x: (Math.random() - 0.5) * 6,
+                    y: isMohan ? ((Math.random() - 0.5) * 5) : (-3 - Math.random() * 3)
+                });
+
+                Body.setAngularVelocity(sprite, (Math.random() - 0.5) * 0.1);
+                World.add(engine.world, sprite);
+            }
+
+            // Spawn Mohans
+            for (let i = 0; i < 12; i++) {
+                spawnSprite(mTexture, true);
+            }
+
+            // Continuous spawning - 70% dogs, 30% flowers
+            const spawnInterval = setInterval(() => {
+                let texture;
+                if (Math.random() < 0.7) { // 70% chance for a dog
+                    texture = spriteImages[Math.floor(Math.random() * spriteImages.length)];
+                } else {
+                    texture = rareSprites[Math.floor(Math.random() * rareSprites.length)];
+                }
+                spawnSprite(texture);
+            }, 250); // Fast spawning for "way more" objects
+
+            setTimeout(() => {
+                document.getElementById('staticMohan').classList.add('show');
+            }, 2000);
+        }
+    </script>
+</body>
+
+</html>
