@@ -12,15 +12,6 @@
 <body>
     <canvas id="celebrationCanvas"></canvas>
 
-    <!-- Tap to Start Overlay -->
-    <div id="startOverlay" class="start-overlay">
-        <div class="mansion-container">
-            <h1 class="mansion-header">Pondyboy Mansion</h1>
-            <p class="mansion-welcome" style="margin-bottom: 20px;">Experience the exclusivity.</p>
-            <button class="action-btn" onclick="initAudio()">Tap to Enter</button>
-        </div>
-    </div>
-
     <div id="congratsMessage">Congratulations!<br>You shall hear back from Mohan soon.</div>
 
     <!-- Audio Elements -->
@@ -153,23 +144,18 @@
 
         const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 
-        function initAudio() {
-            if (audioInitialized) return;
-
-            // Unlock all audio elements
-            [millionaireAudio, selectionAudio, celebrationAudio].forEach(audio => {
-                audio.play().then(() => {
-                    audio.pause();
-                    audio.currentTime = 0;
-                }).catch(e => console.log("Init audio failed:", e));
-            });
-
-            document.getElementById('startOverlay').style.display = 'none';
-            document.getElementById('landingPage').classList.remove('hidden');
-            audioInitialized = true;
-        }
-
         function startSurvey() {
+            // Initialize Audio on first interaction
+            if (!audioInitialized) {
+                [millionaireAudio, selectionAudio, celebrationAudio].forEach(audio => {
+                    audio.play().then(() => {
+                        audio.pause();
+                        audio.currentTime = 0;
+                    }).catch(e => console.log("Init audio failed:", e));
+                });
+                audioInitialized = true;
+            }
+
             document.getElementById('landingPage').classList.add('hidden');
             document.getElementById('quizContainer').classList.remove('hidden');
 
